@@ -1,2 +1,13 @@
 ---
 # tasks file for ansible-fonts
+- name: "Make sure {{ansible_env.HOME}}/.fonts exists"
+  file:
+    path: "{{ansible_env.HOME}}/.fonts"
+    state: directory
+
+- name: "Copy font files to ~/.fonts"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ansible_env.HOME}}/.fonts"
+  with_fileglob:
+    - files/*
